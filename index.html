@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utkarsh Dubey Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: black;
+            overflow-x: hidden;
+        }
+
+        #galaxy-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hover-effect {
+            transition: color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-effect:hover {
+            color: #00bfff;
+            box-shadow: 0px 5px 15px rgba(0, 191, 255, 0.6);
+        }
+
+        .main-logo {
+            font-size: 5rem;
+            text-align: center;
+        }
+
+        .trademark {
+            font-size: 0.8rem;
+            vertical-align: super;
+        }
+
+        .section-text {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Galaxy Animation -->
+    <div id="galaxy-animation"></div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center h-screen">
+        <div class="section-text hover-effect text-lg">
+            <a href="#projects">PROJECTS</a> | <a href="#contact">CONTACT</a>
+        </div>
+        <div class="main-logo hover-effect">
+            utkarshdubey<span class="trademark">™</span>
+        </div>
+        <div class="section-text text-2xl hover-effect">
+            Frontend | DevOps
+        </div>
+    </div>
+
+    <!-- Footer with Contact Info -->
+    <div class="footer-text hover-effect">
+        Open to collaborate on projects, <a href="#contact" class="hover-effect" style="color: #00bfff;">Click on contact me</a>.
+    </div>
+
+    <!-- Google Form Embed (Contact Section) -->
+    <section id="contact">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf9-18Y_4K1SmUz-QIl5yadCGwML7328htQ58CkHeQPj-1bpQ/viewform?embedded=true" 
+        width="640" height="868" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </section>
+
+    <script>
+        // Galaxy Background Animation Script
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        document.getElementById('galaxy-animation').appendChild(canvas);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let stars = [];
+        let fps = 60;
+        let numberOfStars = 200;
+
+        function initStars() {
+            for (let i = 0; i < numberOfStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5,
+                    vx: Math.random() * 0.1,
+                    vy: Math.random() * 0.1
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            for (let i = 0; i < stars.length; i++) {
+                let s = stars[i];
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
+
+        function updateStars() {
+            for (let i = 0; i < stars.length; i++) {
+                let s = stars[i];
+                s.x += s.vx;
+                s.y += s.vy;
+                if (s.x > canvas.width || s.y > canvas.height) {
+                    s.x = Math.random() * canvas.width;
+                    s.y = 0;
+                }
+            }
+        }
+
+        function animate() {
+            drawStars();
+            updateStars();
+            requestAnimationFrame(animate);
+        }
+
+        initStars();
+        animate();
+    </script>
+</body>
+</html>
